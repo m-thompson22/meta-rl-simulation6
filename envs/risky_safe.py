@@ -1,5 +1,4 @@
 import numpy as np
-from core.config import Config
 
 class RiskySafeTask:
     def __init__(self, block_schedule, arm_map=None, block_type="control"):
@@ -20,6 +19,6 @@ class RiskySafeTask:
       arm = self.arm_map[action]
       if arm == "safe":
         reward = self.rS
-      else:  # risky
+      else:
         reward = self.rL if np.random.rand() < self.current_p_risky else 0
       return reward, arm
