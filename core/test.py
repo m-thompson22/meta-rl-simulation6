@@ -57,7 +57,7 @@ def unrolled_session_without_learning(actor, critic, config, episode=0, block_ty
             entropy = -torch.sum(probs * torch.log(probs + 1e-8), dim=-1)
             entropies.append(entropy.item())
 
-            # === Correctly extract policy[p_risky] based on arm_map ===
+            # === Extract policy[p_risky] based on arm_map ===
             policy_p_risky = probs[0, risky_action].item()
             policy_p_risky_log.append(policy_p_risky)
 
@@ -79,7 +79,7 @@ def unrolled_session_without_learning(actor, critic, config, episode=0, block_ty
 
         if trial < n_trials - 1:
           next_input = critic_buffer.peek_next(reward, current_action).float().to(config.device)
-        # Save current hidden state before next forward pass
+          # Save current hidden state before next forward pass
           hx_critic_copy = tuple(h.detach() for h in hx_critic)  # Detach to avoid backprop
           next_value, _ = critic(next_input, hx_critic_copy)
           next_value = next_value.view(-1).item()
@@ -139,7 +139,7 @@ def meta_test_all_conditions(actor, critic, config):
                 block_type=condition,
             )
 
-            feature_dim_per_timestep = 3  # Or whatever your extract_features function uses
+            feature_dim_per_timestep = 3 
             default_size = config.seq_len * 3 + 5
 
 
